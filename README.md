@@ -4,9 +4,10 @@ Single-page landing site for a fine-art black-and-white photography portfolio �
 
 ## Overview
 
-A self-contained, mobile-first landing page presented as an online gallery for a
-fictional photographer (**Mara Voss**). Modern, minimal, editorial — neutral
-palette, true-black framing, generous negative space, and restrained motion.
+A self-contained, mobile-first landing page for **Moravision** — business and
+branding photography (real estate and restaurant food stills). Modern, minimal,
+editorial — neutral palette, true-black framing, generous negative space, and
+restrained motion.
 
 Everything lives in a single file: **`index.html`** (HTML + CSS + a touch of
 vanilla JS, no build step).
@@ -24,11 +25,12 @@ python3 -m http.server 8000
 
 - **Minimal fixed header** — small-caps logotype, sparse Work / About / Contact
   nav, blur-on-scroll, accessible mobile menu.
-- **Asymmetric hero** — confident display headline + a single primary CTA
-  (`EXPLORE GALLERY`) with a clean invert/slide hover.
+- **Asymmetric hero** — confident display headline ("Creating your vision with
+  expressive design") + a primary CTA (`BOOK THE SHOOT`) and a complimentary
+  consult link, with a clean invert/slide hover.
 - **Floating framed hero photo** — thin black modern frame, soft drop shadow,
   perpetual float plus pointer-tilt and scroll parallax.
-- **Mini gallery strip** — staggered high-contrast monochrome plates.
+- **Mini gallery strip** — staggered real estate and restaurant food plates.
 - **Accessible & performant** — semantic HTML, alt text, visible focus states,
   skip link, lazy-loaded imagery, and full `prefers-reduced-motion` support.
 
