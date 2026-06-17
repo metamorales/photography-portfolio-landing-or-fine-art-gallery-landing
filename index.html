@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HALCYON — Mara Voss · Fine-Art Photography</title>
+<meta name="description" content="The fine-art black-and-white photography of Mara Voss — wildlife, nature and portraiture presented as an online gallery." />
+
+<!-- Inter: a refined grotesque for editorial, gallery-grade typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --paper:        #F7F7F5;   /* near-white gallery wall          */
+    --paper-2:      #FAFAFA;   /* lighter panel                    */
+    --ink:          #0A0A0A;   /* true black — framing & accents   */
+    --ink-soft:     #1a1a1a;
+    --gray:         #6b6b6b;   /* secondary text                   */
+    --gray-line:    #d8d8d4;   /* hairline rules                   */
+    --shadow:       rgba(10, 10, 10, 0.22);
+
+    --ease:         cubic-bezier(0.22, 0.61, 0.36, 1);
+    --measure:      1320px;
+  }
+
+  *,
+  *::before,
+  *::after { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* small uppercase eyebrow/label treatment */
+  .label {
+    font-size: 0.68rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    color: var(--gray);
+  }
+
+  /* ---------- Accessibility ---------- */
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 4px;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -999px;
+    top: 0;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.75rem 1.25rem;
+    z-index: 200;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+  }
+  .skip-link:focus { left: 1rem; top: 1rem; }
+
+  .shell {
+    width: 100%;
+    max-width: var(--measure);
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 4rem);
+  }
+
+  /* ============ HEADER ============ */
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 100;
+    padding-block: 1.5rem;
+    background: transparent;
+    transition: background 0.5s var(--ease), padding 0.5s var(--ease),
+                border-color 0.5s var(--ease);
+    border-bottom: 1px solid transparent;
+  }
+  .site-header.is-stuck {
+    background: rgba(247, 247, 245, 0.82);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    padding-block: 1rem;
+    border-bottom-color: var(--gray-line);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logotype {
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.55rem;
+  }
+  .logotype .mark {
+    width: 7px; height: 7px;
+    background: var(--ink);
+    display: inline-block;
+    transform: translateY(-1px);
+  }
+  .logotype .sub {
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.26em;
+    color: var(--gray);
+  }
+
+  .site-nav ul {
+    list-style: none;
+    display: flex;
+    gap: clamp(1.5rem, 3vw, 2.75rem);
+    margin: 0; padding: 0;
+  }
+  .site-nav a {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-weight: 500;
+    position: relative;
+    padding-block: 0.25rem;
+  }
+  .site-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 100%; height: 1px;
+    background: var(--ink);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.45s var(--ease);
+  }
+  .site-nav a:hover::after,
+  .site-nav a:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  .nav-toggle { display: none; }
+
+  /* ============ HERO ============ */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding-top: 6rem;
+    padding-bottom: 4rem;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+    width: 100%;
+  }
+
+  /* ---- Hero copy ---- */
+  .hero-copy { position: relative; z-index: 3; }
+
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .hero-eyebrow::before {
+    content: "";
+    width: 46px; height: 1px;
+    background: var(--ink);
+    display: inline-block;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.9rem, 8vw, 6.2rem);
+    font-weight: 500;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    margin: 0 0 1.75rem;
+  }
+  .hero h1 em {
+    font-style: normal;
+    display: block;
+    color: var(--gray);
+    font-weight: 300;
+  }
+
+  .hero-statement {
+    max-width: 38ch;
+    font-size: 1.02rem;
+    color: var(--ink-soft);
+    margin: 0 0 2.75rem;
+    line-height: 1.6;
+  }
+
+  /* ---- CTA ---- */
+  .cta-row {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    --pad-y: 1.05rem;
+    --pad-x: 2.4rem;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: var(--pad-y) var(--pad-x);
+    font-size: 0.74rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    border: 1px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    cursor: pointer;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  /* clean slide / invert hover */
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--paper);
+    transform: translateX(-101%);
+    transition: transform 0.5s var(--ease);
+    z-index: -1;
+  }
+  .btn:hover,
+  .btn:focus-visible { color: var(--ink); }
+  .btn:hover::before,
+  .btn:focus-visible::before { transform: translateX(0); }
+
+  .btn .arrow { transition: transform 0.5s var(--ease); }
+  .btn:hover .arrow { transform: translateX(5px); }
+
+  .btn-link {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 500;
+    color: var(--gray);
+    border-bottom: 1px solid var(--gray-line);
+    padding-bottom: 0.35rem;
+    transition: color 0.4s var(--ease), border-color 0.4s var(--ease);
+  }
+  .btn-link:hover,
+  .btn-link:focus-visible { color: var(--ink); border-color: var(--ink); }
+
+  /* ============ FLOATING FRAMED IMAGE ============ */
+  .hero-figure {
+    position: relative;
+    z-index: 2;
+    justify-self: end;
+    width: 100%;
+    max-width: 520px;
+    perspective: 1400px;
+  }
+
+  /* the thin sleek black modern frame */
+  .frame {
+    position: relative;
+    padding: 14px;                 /* the frame's "matting"/border width */
+    background: var(--ink);
+    box-shadow:
+      0 2px 1px rgba(255,255,255,0.04) inset,
+      0 38px 60px -28px var(--shadow),
+      0 18px 26px -22px rgba(10,10,10,0.28);
+    will-change: transform;
+    /* gentle perpetual float */
+    animation: float 7s var(--ease) infinite;
+    transition: box-shadow 0.6s var(--ease);
+  }
+  .frame::after { /* inner hairline reveal between frame & photo */
+    content: "";
+    position: absolute;
+    inset: 9px;
+    border: 1px solid rgba(255,255,255,0.10);
+    pointer-events: none;
+  }
+  .frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    filter: grayscale(100%) contrast(1.08);
+  }
+
+  .figure-caption {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+  }
+  .figure-caption .t {
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+  }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0) rotateX(0) rotateY(0); }
+    50%     { transform: translateY(-14px); }
+  }
+
+  /* large faint backdrop type behind the figure */
+  .hero-ghost {
+    position: absolute;
+    right: -2%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: clamp(8rem, 24vw, 22rem);
+    font-weight: 600;
+    letter-spacing: -0.05em;
+    color: var(--ink);
+    opacity: 0.035;
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    left: clamp(1.25rem, 5vw, 4rem);
+    bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    z-index: 3;
+  }
+  .scroll-hint .line {
+    width: 38px; height: 1px;
+    background: var(--ink);
+    transform-origin: left;
+    animation: pulse 2.4s var(--ease) infinite;
+  }
+  @keyframes pulse {
+    0%,100% { transform: scaleX(0.35); opacity: 0.4; }
+    50%     { transform: scaleX(1);    opacity: 1;   }
+  }
+
+  /* ============ MINI GALLERY STRIP (anchor target) ============ */
+  .gallery {
+    padding-block: clamp(4rem, 10vw, 9rem);
+    border-top: 1px solid var(--gray-line);
+  }
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+    flex-wrap: wrap;
+  }
+  .section-head h2 {
+    font-size: clamp(1.8rem, 4vw, 2.9rem);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    margin: 0.75rem 0 0;
+    max-width: 16ch;
+    line-height: 1.05;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(0.75rem, 1.5vw, 1.25rem);
+  }
+  .plate {
+    position: relative;
+    overflow: hidden;
+    background: var(--ink);
+    aspect-ratio: 3 / 4;
+  }
+  .plate img {
+    display: block;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%) contrast(1.06);
+    transition: transform 0.9s var(--ease), filter 0.9s var(--ease);
+  }
+  .plate:hover img { transform: scale(1.05); filter: grayscale(100%) contrast(1.12); }
+  .plate figcaption {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 1.1rem 1.2rem;
+    color: var(--paper);
+    background: linear-gradient(to top, rgba(10,10,10,0.78), transparent);
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  }
+  .plate:hover figcaption,
+  .plate:focus-within figcaption { opacity: 1; transform: translateY(0); }
+  .plate .idx { opacity: 0.7; }
+  .plate-2 { transform: translateY(clamp(1rem, 4vw, 3.5rem)); } /* asymmetric stagger */
+
+  /* ============ FOOTER ============ */
+  .site-footer {
+    border-top: 1px solid var(--gray-line);
+    padding-block: clamp(3rem, 6vw, 5rem);
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .footer-inner .lead {
+    font-size: clamp(1.4rem, 3vw, 2.1rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    max-width: 18ch;
+    line-height: 1.1;
+    margin: 0.75rem 0 0;
+  }
+  .footer-meta {
+    display: grid;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+  .footer-meta a { border-bottom: 1px solid var(--gray-line); padding-bottom: 1px; }
+  .footer-meta a:hover { border-color: var(--ink); }
+  .footer-base {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--gray-line);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  /* ============ REVEAL-ON-LOAD / SCROLL ============ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 1s var(--ease), transform 1s var(--ease);
+  }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal[data-d="1"] { transition-delay: 0.08s; }
+  .reveal[data-d="2"] { transition-delay: 0.16s; }
+  .reveal[data-d="3"] { transition-delay: 0.24s; }
+  .reveal[data-d="4"] { transition-delay: 0.32s; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 3.5rem; }
+    .hero-figure { justify-self: center; max-width: 420px; order: -1; }
+    .hero-ghost { display: none; }
+    .scroll-hint { display: none; }
+    .hero { min-height: auto; padding-top: 8rem; }
+  }
+
+  @media (max-width: 680px) {
+    .site-nav { display: none; }
+    .site-nav.open {
+      display: block;
+      position: absolute;
+      inset: 100% 0 auto 0;
+      background: var(--paper-2);
+      border-bottom: 1px solid var(--gray-line);
+      padding: 1.5rem clamp(1.25rem, 5vw, 4rem) 2rem;
+    }
+    .site-nav.open ul { flex-direction: column; gap: 1.4rem; }
+    .nav-toggle {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: 0;
+      cursor: pointer;
+      padding: 0.4rem;
+    }
+    .nav-toggle span {
+      width: 24px; height: 1.5px; background: var(--ink);
+      transition: transform 0.4s var(--ease), opacity 0.4s var(--ease);
+    }
+    .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .plate-3 { display: none; }
+    .plate-2 { transform: none; }
+    .btn { width: 100%; justify-content: center; }
+    .cta-row { gap: 1.25rem; }
+  }
+
+  /* ============ MOTION PREFERENCE ============ */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#gallery">Skip to gallery</a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="top">
+    <div class="shell header-inner">
+      <a class="logotype" href="#top" aria-label="Mara Voss — home">
+        <span class="mark" aria-hidden="true"></span>
+        Mara&nbsp;Voss
+        <span class="sub">Photographer</span>
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="site-nav" id="primary-nav" aria-label="Primary">
+        <ul>
+          <li><a href="#gallery">Work</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <span class="hero-ghost" aria-hidden="true">VOSS</span>
+
+      <div class="shell hero-grid">
+        <div class="hero-copy">
+          <p class="hero-eyebrow label reveal" data-d="1">Fine-Art Photography · Est. 2014</p>
+
+          <h1 id="hero-title" class="reveal" data-d="2">
+            Light, held<br />
+            <em>in black &amp; white.</em>
+          </h1>
+
+          <p class="hero-statement reveal" data-d="3">
+            A quiet study of wildlife, wilderness and the human form —
+            high-contrast monochrome work, printed and presented as an
+            ongoing gallery.
+          </p>
+
+          <div class="cta-row reveal" data-d="4">
+            <a class="btn" href="#gallery">
+              Explore Gallery
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="btn-link" href="#about">About the work</a>
+          </div>
+        </div>
+
+        <!-- Floating framed hero photograph -->
+        <figure class="hero-figure reveal" data-d="2">
+          <div class="frame" id="hero-frame">
+            <!-- Swappable placeholder: replace src with the hero photograph -->
+            <img
+              src="https://images.unsplash.com/photo-1474511320723-9a56873867b5?q=80&w=1200&auto=format&fit=crop"
+              alt="A red fox in profile, rendered in high-contrast black and white against deep shadow."
+              width="1200" height="1500" loading="eager" fetchpriority="high" />
+          </div>
+          <figcaption class="figure-caption">
+            <span class="t">Vulpes, No.&nbsp;07</span>
+            <span class="label">Silver&nbsp;Gelatin</span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="scroll-hint" aria-hidden="true">
+        <span class="line"></span>
+        <span class="label">Scroll</span>
+      </div>
+    </section>
+
+    <!-- ============ GALLERY STRIP ============ -->
+    <section class="gallery shell" id="gallery" aria-labelledby="gallery-title">
+      <div class="section-head">
+        <div>
+          <p class="label reveal">Selected Work — Series I</p>
+          <h2 id="gallery-title" class="reveal" data-d="1">Studies in light, shadow&nbsp;and form.</h2>
+        </div>
+        <a class="btn-link reveal" data-d="2" href="#contact">Full portfolio</a>
+      </div>
+
+      <div class="gallery-grid">
+        <figure class="plate plate-1 reveal" data-d="1" tabindex="0">
+          <img src="https://images.unsplash.com/photo-1484406566174-9da000fda645?q=80&w=900&auto=format&fit=crop"
+               alt="A solitary deer standing in mist among bare winter trees, monochrome." loading="lazy" />
+          <figcaption><span>Fallow</span><span class="idx">01</span></figcaption>
+        </figure>
+        <figure class="plate plate-2 reveal" data-d="2" tabindex="0">
+          <img src="https://images.unsplash.com/photo-1503066211613-c17ebc9daef0?q=80&w=900&auto=format&fit=crop"
+               alt="Close portrait study with strong directional light, black and white." loading="lazy" />
+          <figcaption><span>Contour</span><span class="idx">02</span></figcaption>
+        </figure>
+        <figure class="plate plate-3 reveal" data-d="3" tabindex="0">
+          <img src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?q=80&w=900&auto=format&fit=crop"
+               alt="A dramatic mountain ridgeline under heavy cloud, high-contrast monochrome." loading="lazy" />
+          <figcaption><span>Ridge</span><span class="idx">03</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ FOOTER / ABOUT / CONTACT ============ -->
+    <footer class="site-footer" id="about">
+      <div class="shell">
+        <div class="footer-inner">
+          <div>
+            <p class="label reveal">About &amp; Contact</p>
+            <p class="lead reveal" data-d="1">
+              Available for exhibition prints, commissions&nbsp;and editorial commissions worldwide.
+            </p>
+          </div>
+          <div class="footer-meta reveal" data-d="2" id="contact">
+            <span class="label">Studio</span>
+            <a href="mailto:studio@maravoss.com">studio@maravoss.com</a>
+            <a href="tel:+10000000000">+1 (000) 000&nbsp;0000</a>
+            <span style="color:var(--gray)">Reykjavík · Berlin</span>
+          </div>
+        </div>
+
+        <div class="footer-base">
+          <span>© 2026 Mara Voss</span>
+          <span>Instagram — Behance — Print Inquiries</span>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // ---- Header state on scroll ----
+    var header = document.querySelector('.site-header');
+    var onScroll = function () {
+      header.classList.toggle('is-stuck', window.scrollY > 24);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // ---- Mobile nav ----
+    var toggle = document.querySelector('.nav-toggle');
+    var nav = document.getElementById('primary-nav');
+    toggle.addEventListener('click', function () {
+      var open = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    nav.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') {
+        nav.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // ---- Reveal on load + scroll ----
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var items = document.querySelectorAll('.reveal');
+    if (reduce || !('IntersectionObserver' in window)) {
+      items.forEach(function (el) { el.classList.add('in'); });
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      items.forEach(function (el) { io.observe(el); });
+    }
+
+    // ---- Gentle parallax / tilt on the framed hero image ----
+    var frame = document.getElementById('hero-frame');
+    if (frame && !reduce && window.matchMedia('(hover: hover)').matches) {
+      var fig = frame.parentElement;
+      fig.addEventListener('mousemove', function (e) {
+        var r = fig.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        frame.style.transform =
+          'rotateY(' + (px * 6).toFixed(2) + 'deg) rotateX(' + (-py * 6).toFixed(2) +
+          'deg) translateY(-6px)';
+      });
+      fig.addEventListener('mouseleave', function () {
+        frame.style.transform = '';   // hand control back to the float keyframe
+      });
+
+      // subtle scroll parallax on the whole figure
+      window.addEventListener('scroll', function () {
+        var shift = Math.min(window.scrollY * 0.06, 60);
+        fig.style.setProperty('translate', '0 ' + (-shift).toFixed(1) + 'px');
+      }, { passive: true });
+    }
+  </script>
+</body>
+</html>
